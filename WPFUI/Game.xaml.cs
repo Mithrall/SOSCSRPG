@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using Engine.Models;
@@ -17,11 +19,27 @@ namespace WPFUI {
 
         private bool running = true;
 
+        private string _onlinePlayers;
+        public string OnlinePlayers {
+            get { return _onlinePlayers; }
+            set {
+                if (_onlinePlayers != value) {
+                    _onlinePlayers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public Game() {
             InitializeComponent();
 
             CurrentPlayer = new Player();
-            DataContext = CurrentPlayer;            
+            DataContext = CurrentPlayer;
         }
 
         //temp for testing
@@ -98,6 +116,15 @@ namespace WPFUI {
         public void UpdateTextBoxes(string message) {
             string[] messages = message.Split('¤');
             string code = messages[0];
+
+            switch (code) {
+                case "OnlinePlayers":
+                    OnlinePlayers = "";
+                    foreach (var player in messages) {
+                        OnlinePlayers += player + "\n";
+                    }
+                    break;
+            }
         }
 
         private void Disconnect_Click(object sender, RoutedEventArgs e) {
