@@ -28,7 +28,7 @@ namespace ConsoleApplication1 {
         private void OnlinePlayers() {
             string message = "OnlinePlayers¤";
             foreach (var player in Repo.OnlinePlayers) {
-                message += player.name + ": Level" + player.level + ", " + player.characterClass + "¤";
+                message += player.name + ": Level " + player.level + " " + player.characterClass + "¤";
             }
 
             foreach (var client in Repo.Clients) {
@@ -67,16 +67,16 @@ namespace ConsoleApplication1 {
                             Console.WriteLine("New Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
                             Repo.Players.Add(currentPlayer);
                             Repo.OnlinePlayers.Add(currentPlayer);
-                            OnlinePlayers();
                             sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
+                            OnlinePlayers();
                             break;
 
                         case "LOAD":
                             currentPlayer = Repo.Players.Find(x => x.name == messages[1]);
                             Console.WriteLine("Old Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
                             Repo.OnlinePlayers.Add(currentPlayer);
-                            OnlinePlayers();
                             sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
+                            OnlinePlayers();
                             break;
 
                         case "XP":

@@ -6,45 +6,32 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using Engine.Models;
+using Engine.ViewModels;
 
 namespace WPFUI {
     public partial class Game:Window {
-
-        Player CurrentPlayer;
 
         TcpClient client;
         NetworkStream stream;
         StreamReader sr;
         StreamWriter sw;
+        GameSession _gameSession;
 
         private bool running = true;
-
-        private string _onlinePlayers;
-        public string OnlinePlayers {
-            get { return _onlinePlayers; }
-            set {
-                if (_onlinePlayers != value) {
-                    _onlinePlayers = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
 
         public Game() {
             InitializeComponent();
 
-            CurrentPlayer = new Player();
-            DataContext = CurrentPlayer;
+            
+            _gameSession = new GameSession();
+
+            DataContext = _gameSession;
         }
 
         //temp for testing
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
-            CurrentPlayer.ExperiencePoints += +10;
+            _gameSession.CurrentPlayer.ExperiencePoints += +10;
             sw.WriteLine("XP¤" + 10);
         }
 
@@ -70,34 +57,33 @@ namespace WPFUI {
             } else {
                 return false;
             }
-
         }
 
         public void StartNew(string name, string type) {
-            CurrentPlayer.Name = name;
-            CurrentPlayer.CharacterClass = type;
+            _gameSession.CurrentPlayer.Name = name;
+            _gameSession.CurrentPlayer.CharacterClass = type;
 
             sw.WriteLine("NEW¤" + name + "¤" + type);
             string[] stats = sr.ReadLine().Split('¤');
-            CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            CurrentPlayer.Gold = int.Parse(stats[1]);
-            CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            CurrentPlayer.Level = int.Parse(stats[3]);
+            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
         }
 
         public void StartExisting(string name, string type) {
-            CurrentPlayer.Name = name;
-            CurrentPlayer.CharacterClass = type;
+            _gameSession.CurrentPlayer.Name = name;
+            _gameSession.CurrentPlayer.CharacterClass = type;
 
             sw.WriteLine("LOAD¤" + name);
             string[] stats = sr.ReadLine().Split('¤');
-            CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            CurrentPlayer.Gold = int.Parse(stats[1]);
-            CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            CurrentPlayer.Level = int.Parse(stats[3]);
+            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
@@ -119,9 +105,9 @@ namespace WPFUI {
 
             switch (code) {
                 case "OnlinePlayers":
-                    OnlinePlayers = "";
-                    foreach (var player in messages) {
-                        OnlinePlayers += player + "\n";
+                    _gameSession.OnlinePlayers = "";
+                    for (int i = 1; i < messages.Length; i++) {
+                        _gameSession.OnlinePlayers += messages[i] + "\n";
                     }
                     break;
             }
