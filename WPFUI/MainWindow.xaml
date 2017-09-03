@@ -5,75 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
-        Title="Incremental RPG" Height="1080" Width="1920">
-    <Grid>
+        Title="Login" Height="480" Width="854">
+    
+    <Grid FocusManager.FocusedElement="{Binding ElementName=IPTextBox}">
+
         <Grid.RowDefinitions>
+            <RowDefinition Height="160"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="225"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <!--Header-->
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Menu" Background="AliceBlue"/>
-        
-        <!--STATS-->
-        <Grid Grid.Row="1" Grid.Column="0" Background="Aquamarine">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
+        <Label Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="50">Insert Awsome Name</Label>
+        
+        
+        <!-- MIDDLE -->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="156"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="STATS" HorizontalAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Name:"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentPlayer.Name}"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="Class:"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentPlayer.CharacterClass}"/>
-            <Label Grid.Row="3" Grid.Column="0" Content="Hit points:"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding CurrentPlayer.HitPoints}"/>
-            <Label Grid.Row="4" Grid.Column="0" Content="Gold:"/>
-            <Label Grid.Row="4" Grid.Column="1" Content="{Binding CurrentPlayer.Gold}"/>
-            <Label Grid.Row="5" Grid.Column="0" Content="XP:"/>
-            <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentPlayer.ExperiencePoints}"/>
-            <Label Grid.Row="6" Grid.Column="0" Content="Level:"/>
-            <Label Grid.Row="6" Grid.Column="1" Content="{Binding CurrentPlayer.Level}"/>
-        </Grid>
+            <Label x:Name="IPLabel" Content="Server IP:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="IPTextBox" Height="25" Grid.Row="0" Grid.Column="1" TabIndex="1"/>
 
-        <!--Game Data-->
-        <Label Grid.Row="1" Grid.Column="1" Content="Game Data" Background="Beige"/>
-
-        <!--Inventory/Quests-->
-        <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
-
-        <!--Combat/Movement Control-->
-        <Grid Grid.Row="2" Grid.Column="1" Background="PaleGreen">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <Label x:Name="UserNameLabel" Content="User name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameTextBox" Height="25" Grid.Row="1" Grid.Column="1" TabIndex="2"/>
             
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <Label x:Name="TypeLabel" Content="Class" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="TypeComboBox" Height="25" Grid.Row="2" Grid.Column="1" TabIndex="2">
+                <ComboBoxItem Content="Rogue"></ComboBoxItem>
+                <ComboBoxItem Content="Mage"></ComboBoxItem>
+                <ComboBoxItem Content="Warrior"></ComboBoxItem>                
+            </ComboBox>
 
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Combat/Movement Control" HorizontalAlignment="Center"/>
-            <Button Grid.Row="1" Grid.Column="0" Content="Add XP" Click="ButtonBase_OnClick"/>
+            <Button x:Name="LoginButton" Content="Login" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Click="Login_Click"/>
         </Grid>
-       
     </Grid>
 </Window>
