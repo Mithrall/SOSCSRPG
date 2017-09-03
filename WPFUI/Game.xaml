@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Incremental RPG" Height="480" Width="854"
         ResizeMode ="NoResize">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Header-->
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Menu" Background="AliceBlue"/>
         <Button Grid.Column="1" Content="Disconnect" Click="Disconnect_Click" Width="120" HorizontalAlignment="Left"/>
@@ -55,27 +55,51 @@
         </Grid>
 
         <!--Game Data-->
-        <Label Grid.Row="1" Grid.Column="1" Content="Game Data" Background="Beige"/>
+        <Grid Grid.Row="1" Grid.Column="1">
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+        <Label Grid.Column="0" Grid.Row="0" Content="Game Data" Background="Beige"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=BobWasHere}" Background="BlanchedAlmond"/>
+            <Label Grid.Column="1"  Grid.Row="0" Content=": : Online Players : :" Background="DeepPink"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=OnlinePlayers}" Background="HotPink"/>
+        </Grid>
         <!--Inventory/Quests-->
         <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
 
         <!--Combat/Movement Control-->
-        <Grid Grid.Row="2" Grid.Column="1" Background="PaleGreen">
+        <Grid Grid.Row="2" Grid.Column="1" Background="PaleGreen" Cursor="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Combat/Movement Control" HorizontalAlignment="Center"/>
-            <Button Grid.Row="1" Grid.Column="0" Content="Add XP" Click="ButtonBase_OnClick"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Combat/Movement Control" Grid.Column="1" />
+            <Button Grid.Row="1" Grid.Column="1" Content="Add XP" Width="100" Margin="0,0,10,0"/>
+            <Button Grid.Row="1" Grid.Column="2" Content="Add XP" Width="100" Margin="0,0,10,0"/>
+            <Button Grid.Row="1" Grid.Column="3" Content="Add XP" Width="100" Margin="0,0,10,0"/>
+            <Button Grid.Row="1" Grid.Column="4" Content="Add XP" Width="100" Margin="0,0,10,0"/>
+            <Button Grid.Row="1" Grid.Column="5" Content="Add XP" Width="100" Margin="0,0,10,0"/>
         </Grid>
-       
+
     </Grid>
 </Window>
