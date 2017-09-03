@@ -6,7 +6,7 @@ using System.Windows;
 using Engine.ViewModels;
 
 namespace WPFUI {
-    public partial class Game : Window {
+    public partial class Game:Window {
         private GameSession _gameSession;
 
         TcpClient client;
@@ -47,7 +47,7 @@ namespace WPFUI {
             } else {
                 return false;
             }
-            
+
         }
 
         public void StartNew(string name, string type) {
@@ -88,9 +88,7 @@ namespace WPFUI {
         public delegate void UpdateText(string message);
         public void UpdateTextBoxes(string message) {
             string[] messages = message.Split('¤');
-
             string code = messages[0];
-
         }
 
         private void Disconnect_Click(object sender, RoutedEventArgs e) {
