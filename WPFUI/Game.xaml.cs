@@ -15,9 +15,11 @@ namespace WPFUI {
         StreamWriter sw;
 
         private bool running = true;
+        private string _name;
 
         public Game(string name, string type) {
             InitializeComponent();
+            this._name = name;
 
             _gameSession = new GameSession(name, type);
 
@@ -44,6 +46,7 @@ namespace WPFUI {
         public void Start() {
             Thread thread = new Thread(Loop);
             thread.Start();
+            sw.WriteLine("name¤" + _name);
         }
 
         public void Loop() {

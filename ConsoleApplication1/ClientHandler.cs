@@ -14,6 +14,8 @@ namespace ConsoleApplication1 {
         StreamWriter write;
         IPEndPoint IPEP;
 
+        string UserName;
+
         public ClientHandler(TcpClient client) {
             this.client = client;
             read = new StreamReader(client.GetStream());
@@ -29,12 +31,16 @@ namespace ConsoleApplication1 {
             return write;
         }
 
-
         internal void Handle() {
             while (true) {
                 try {
                     string message = read.ReadLine();
-
+                    string[] messages = message.Split('¤');
+                    if (messages[0] == "name") {
+                        UserName = messages[1];
+                        Console.WriteLine("Chosen Name: " + UserName);
+                    }
+                    
                 } catch (Exception e) {
                     if (e.GetType() == typeof(IOException)) {
                         client.Close();
