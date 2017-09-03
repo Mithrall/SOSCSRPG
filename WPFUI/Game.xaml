@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
-        Title="Incremental RPG" Height="480" Width="854">
+        Title="Incremental RPG" Height="480" Width="854"
+        ResizeMode ="NoResize">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,7 +21,7 @@
         
         <!--Header-->
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Menu" Background="AliceBlue"/>
-        
+        <Button Grid.Column="1" Content="Disconnect" Click="Disconnect_Click" Width="120" HorizontalAlignment="Left"/>
         <!--STATS-->
         <Grid Grid.Row="1" Grid.Column="0" Background="Aquamarine">
             <Grid.RowDefinitions>

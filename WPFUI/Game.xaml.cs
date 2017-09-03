@@ -15,14 +15,9 @@ namespace WPFUI {
         StreamWriter sw;
 
         private bool running = true;
-        private string _name;
 
-        public Game(string name, string type) {
+        public Game() {
             InitializeComponent();
-            this._name = name;
-
-            _gameSession = new GameSession(name, type);
-
             DataContext = _gameSession;
         }
 
@@ -38,15 +33,47 @@ namespace WPFUI {
                 sw = new StreamWriter(stream);
                 sw.AutoFlush = true;
                 return true;
-            } catch (Exception) {
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
                 return false;
             }
         }
 
-        public void Start() {
+        public bool isNew(string name) {
+            sw.WriteLine("ISNEW¤" + name);
+
+            if (sr.ReadLine() != "EXISTS") {
+                return true;
+            } else {
+                return false;
+            }
+            
+        }
+
+        public void StartNew(string name, string type) {
+            _gameSession = new GameSession(name, type);
+            sw.WriteLine("NEW¤" + name + "¤" + type);
+            string[] stats = sr.ReadLine().Split('¤');
+            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+
             Thread thread = new Thread(Loop);
             thread.Start();
-            sw.WriteLine("name¤" + _name);
+        }
+
+        public void StartExisting(string name, string type) {
+            _gameSession = new GameSession(name, type);
+            sw.WriteLine("LOAD¤" + name);
+            string[] stats = sr.ReadLine().Split('¤');
+            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+
+            Thread thread = new Thread(Loop);
+            thread.Start();
         }
 
         public void Loop() {
@@ -64,6 +91,12 @@ namespace WPFUI {
 
             string code = messages[0];
 
+        }
+
+        private void Disconnect_Click(object sender, RoutedEventArgs e) {
+            sw.WriteLine("EXIT");
+            running = false;
+            Environment.Exit(1);
         }
     }
 }

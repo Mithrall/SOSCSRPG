@@ -10,17 +10,15 @@ using System.Threading.Tasks;
 namespace ConsoleApplication1 {
     public class ClientHandler {
         TcpClient client;
-        StreamReader read;
-        StreamWriter write;
+        StreamReader sr;
+        StreamWriter sw;
         IPEndPoint IPEP;
-
-        string UserName;
 
         public ClientHandler(TcpClient client) {
             this.client = client;
-            read = new StreamReader(client.GetStream());
-            write = new StreamWriter(client.GetStream());
-            write.AutoFlush = true;
+            sr = new StreamReader(client.GetStream());
+            sw = new StreamWriter(client.GetStream());
+            sw.AutoFlush = true;
             IPEP = (IPEndPoint)client.Client.RemoteEndPoint;
         }
 
@@ -28,19 +26,45 @@ namespace ConsoleApplication1 {
             return IPEP;
         }
         internal StreamWriter Writer() {
-            return write;
+            return sw;
         }
 
         internal void Handle() {
             while (true) {
                 try {
-                    string message = read.ReadLine();
+                    string message = sr.ReadLine();
                     string[] messages = message.Split('¤');
-                    if (messages[0] == "name") {
-                        UserName = messages[1];
-                        Console.WriteLine("Chosen Name: " + UserName);
+
+                    switch (messages[0]) {
+                        case "ISNEW":
+                            if (Repo.Players.Find(x => x.name == messages[1]) != null) {
+                                sw.WriteLine("EXISTS");
+                            } else {
+                                sw.WriteLine("DoesntExists");
+                            }
+                            break;
+
+                        case "NEW":
+                            Player tempP = new Player(messages[1], messages[2]);
+                            Console.WriteLine("New Player: " + tempP.name + ", " + tempP.characterClass);
+                            Repo.Players.Add(tempP);
+                            sw.WriteLine(tempP.experiencePoints + "¤" + tempP.gold + "¤" + tempP.hitPoints + "¤" + tempP.level);
+                            break;
+
+                        case "LOAD":
+                            Player tempPLoad = Repo.Players.Find(x => x.name == messages[1]);
+                            Console.WriteLine("Old Player: " + tempPLoad.name + ", " + tempPLoad.characterClass);
+                            sw.WriteLine(tempPLoad.experiencePoints + "¤" + tempPLoad.gold + "¤" + tempPLoad.hitPoints + "¤" + tempPLoad.level);
+                            break;
                     }
-                    
+
+                    if (!client.Connected || message == "EXIT") {
+                        Repo.Clients.Remove(this);
+                        Console.WriteLine(IPEP + " - Disconnected");
+                        Console.WriteLine(Repo.Clients.Count + " Client(s) Connected");
+                        break;
+                    }
+
                 } catch (Exception e) {
                     if (e.GetType() == typeof(IOException)) {
                         client.Close();

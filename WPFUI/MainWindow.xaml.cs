@@ -3,9 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 
 namespace WPFUI {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
+
     public partial class MainWindow:Window {
 
         public MainWindow() {
@@ -32,10 +30,15 @@ namespace WPFUI {
             if (matches.Count > 0) {
                 foreach (Match match in matches) {
                     ip = match.Value;
-                    Game c = new Game(UserName, type);
-                    if (c.Connect(ip)) {
-                        c.Show();
-                        c.Start();
+                    Game g = new Game();
+                    if (g.Connect(ip)) {
+                        g.Show();
+                        if (g.isNew(UserName)) {
+                            g.StartNew(UserName, type);
+                        } else {
+                            g.StartExisting(UserName, type);
+                        }
+                        
                         this.Hide();
                     }
                 }

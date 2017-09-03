@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
-        Title="Login" Height="480" Width="854">
+        Title="Login" Height="480" Width="854"
+        ResizeMode ="NoResize">
     
     <Grid FocusManager.FocusedElement="{Binding ElementName=IPTextBox}">
 
