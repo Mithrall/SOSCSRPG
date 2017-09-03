@@ -10,10 +10,7 @@
         public int level;
         public int gold;
 
-        public Player(string name, string characterClass) {
-
-            this.name = name;
-            this.characterClass = characterClass;
+        public Player() {
 
             //start stats
             hitPoints = 50;

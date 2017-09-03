@@ -30,6 +30,7 @@ namespace ConsoleApplication1 {
         }
 
         internal void Handle() {
+            Player currentPlayer = new Player();
             while (true) {
                 try {
                     string message = sr.ReadLine();
@@ -45,16 +46,22 @@ namespace ConsoleApplication1 {
                             break;
 
                         case "NEW":
-                            Player tempP = new Player(messages[1], messages[2]);
-                            Console.WriteLine("New Player: " + tempP.name + ", " + tempP.characterClass);
-                            Repo.Players.Add(tempP);
-                            sw.WriteLine(tempP.experiencePoints + "¤" + tempP.gold + "¤" + tempP.hitPoints + "¤" + tempP.level);
+                            currentPlayer.name = messages[1];
+                            currentPlayer.characterClass = messages[2];
+                            Console.WriteLine("New Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
+                            Repo.Players.Add(currentPlayer);
+                            sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
                             break;
 
                         case "LOAD":
-                            Player tempPLoad = Repo.Players.Find(x => x.name == messages[1]);
-                            Console.WriteLine("Old Player: " + tempPLoad.name + ", " + tempPLoad.characterClass);
-                            sw.WriteLine(tempPLoad.experiencePoints + "¤" + tempPLoad.gold + "¤" + tempPLoad.hitPoints + "¤" + tempPLoad.level);
+                            currentPlayer = Repo.Players.Find(x => x.name == messages[1]);
+                            Console.WriteLine("Old Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
+                            sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
+                            break;
+
+                        case "XP":
+                            currentPlayer.experiencePoints += int.Parse(messages[1]);
+                            Console.WriteLine("Giving " + currentPlayer.name + ": " + int.Parse(messages[1]) + " xp");
                             break;
                     }
 

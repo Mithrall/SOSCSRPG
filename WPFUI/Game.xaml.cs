@@ -3,11 +3,12 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
-using Engine.ViewModels;
+using Engine.Models;
 
 namespace WPFUI {
     public partial class Game:Window {
-        private GameSession _gameSession;
+
+        Player CurrentPlayer;
 
         TcpClient client;
         NetworkStream stream;
@@ -18,11 +19,15 @@ namespace WPFUI {
 
         public Game() {
             InitializeComponent();
-            DataContext = _gameSession;
+
+            CurrentPlayer = new Player();
+            DataContext = CurrentPlayer;            
         }
 
+        //temp for testing
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
-            _gameSession.CurrentPlayer.ExperiencePoints += +10;
+            CurrentPlayer.ExperiencePoints += +10;
+            sw.WriteLine("XP¤" + 10);
         }
 
         public bool Connect(string ip) {
@@ -51,26 +56,30 @@ namespace WPFUI {
         }
 
         public void StartNew(string name, string type) {
-            _gameSession = new GameSession(name, type);
+            CurrentPlayer.Name = name;
+            CurrentPlayer.CharacterClass = type;
+
             sw.WriteLine("NEW¤" + name + "¤" + type);
             string[] stats = sr.ReadLine().Split('¤');
-            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
-            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+            CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            CurrentPlayer.Gold = int.Parse(stats[1]);
+            CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            CurrentPlayer.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
         }
 
         public void StartExisting(string name, string type) {
-            _gameSession = new GameSession(name, type);
+            CurrentPlayer.Name = name;
+            CurrentPlayer.CharacterClass = type;
+
             sw.WriteLine("LOAD¤" + name);
             string[] stats = sr.ReadLine().Split('¤');
-            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
-            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+            CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
+            CurrentPlayer.Gold = int.Parse(stats[1]);
+            CurrentPlayer.HitPoints = int.Parse(stats[2]);
+            CurrentPlayer.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
