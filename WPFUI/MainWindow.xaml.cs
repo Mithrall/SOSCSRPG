@@ -8,6 +8,8 @@ namespace WPFUI {
 
         public MainWindow() {
             InitializeComponent();
+            CharSelect charSelect = new CharSelect();
+            charSelect.Show();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e) {
