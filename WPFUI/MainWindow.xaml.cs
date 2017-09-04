@@ -8,8 +8,6 @@ namespace WPFUI {
 
         public MainWindow() {
             InitializeComponent();
-            CharSelect charSelect = new CharSelect();
-            charSelect.Show();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e) {
@@ -24,21 +22,20 @@ namespace WPFUI {
 
         private void Login() {
             string ip = IPTextBox.Text;
-            string UserName = UserNameTextBox.Text;
-            string type = TypeComboBox.Text;
+            string userName = UserNameTextBox.Text;
 
             Regex regex = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}");
             MatchCollection matches = regex.Matches(ip);
             if (matches.Count > 0) {
                 foreach (Match match in matches) {
                     ip = match.Value;
-                    Game g = new Game();
-                    if (g.Connect(ip)) {
-                        g.Show();
-                        if (g.isNew(UserName)) {
-                            g.StartNew(UserName, type);
+                    CharSelect charSelect = new CharSelect();
+                    if (charSelect.Connect(ip)) {
+                        charSelect.Show();
+                        if (charSelect.isNew(userName)) {
+                            charSelect.StartNew(userName);
                         } else {
-                            g.StartExisting(UserName, type);
+                            charSelect.StartExisting(userName);
                         }
                         
                         this.Hide();

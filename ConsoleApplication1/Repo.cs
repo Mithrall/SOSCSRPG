@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConsoleApplication1 {
     public static class Repo {
+
         public static List<ClientHandler> Clients = new List<ClientHandler>();
-        public static List<Player> Players = new List<Player>();
-        public static List<Player> OnlinePlayers = new List<Player>();
-
-        private static void Broadcast() {
-            Console.WriteLine("Broadcasting...");
-            foreach (var client in Clients) {
-
-            }
-        }
+        public static List<User> Users = new List<User>();
+        
+        public static List<Character> OnlineCharacters = new List<Character>();
+        
     }
 }

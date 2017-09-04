@@ -1,5 +1,5 @@
 ﻿namespace ConsoleApplication1 {
-    public class Player {
+    public class Character {
 
         public string name;
         public string characterClass;
@@ -10,7 +10,7 @@
         public int level;
         public int gold;
 
-        public Player() {
+        public Character() {
 
             //start stats
             hitPoints = 50;

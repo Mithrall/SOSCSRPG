@@ -4,14 +4,14 @@ using Engine.Models;
 
 namespace Engine.ViewModels {
     public class GameSession : INotifyPropertyChanged {
-        public Player CurrentPlayer { get; set; }
+        public Characters CurrentCharacter { get; set; }
 
-        private string _onlinePlayers;
-        public string OnlinePlayers {
-            get { return _onlinePlayers; }
+        private string _onlineCharacters;
+        public string OnlineCharacters {
+            get { return _onlineCharacters; }
             set {
-                if (_onlinePlayers != value) {
-                    _onlinePlayers = value;
+                if (_onlineCharacters != value) {
+                    _onlineCharacters = value;
                     OnPropertyChanged();
                 }
             }
@@ -22,7 +22,7 @@ namespace Engine.ViewModels {
         }
 
         public GameSession() {
-            CurrentPlayer = new Player();
+            CurrentCharacter = new Characters();
         }
     }
 }

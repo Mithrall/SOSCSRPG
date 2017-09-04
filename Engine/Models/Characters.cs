@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Engine.Models {
-    public class Player : INotifyPropertyChanged {
+    public class Characters : INotifyPropertyChanged {
         private string _name;
         private string _characterClass;
         private int _hitPoints;

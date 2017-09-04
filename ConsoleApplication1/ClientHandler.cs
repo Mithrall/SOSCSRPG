@@ -13,8 +13,7 @@ namespace ConsoleApplication1 {
         public ClientHandler(TcpClient client) {
             this.client = client;
             sr = new StreamReader(client.GetStream());
-            sw = new StreamWriter(client.GetStream());
-            sw.AutoFlush = true;
+            sw = new StreamWriter(client.GetStream()) { AutoFlush = true };
             IPEP = (IPEndPoint)client.Client.RemoteEndPoint;
         }
 
@@ -25,10 +24,10 @@ namespace ConsoleApplication1 {
             return sw;
         }
 
-        private void OnlinePlayers() {
-            string message = "OnlinePlayers¤";
-            foreach (var player in Repo.OnlinePlayers) {
-                message += player.name + ": Level " + player.level + " " + player.characterClass + "¤";
+        private void OnlineCharacter() {
+            string message = "OnlineCharacter¤";
+            foreach (var character in Repo.OnlineCharacters) {
+                message += character.name + ": Level " + character.level + " " + character.characterClass + "¤";
             }
 
             foreach (var client in Repo.Clients) {
@@ -37,59 +36,62 @@ namespace ConsoleApplication1 {
         }
 
         internal void Handle() {
-            Player currentPlayer = new Player();
+            User currentUser = new User();
             while (true) {
                 try {
                     string message = sr.ReadLine();
 
+                    //DISCONNECT CLIENT
                     if (!client.Connected || message == "EXIT") {
                         Repo.Clients.Remove(this);
-                        Repo.OnlinePlayers.Remove(currentPlayer);
+                        //Repo.OnlineCharacters.Remove(currentUser);
                         Console.WriteLine(IPEP + " - Disconnected");
                         Console.WriteLine(Repo.Clients.Count + " Client(s) Connected");
                         break;
                     }
 
+                    //READ MESSEAGE FROM CLIENT
                     string[] messages = message.Split('¤');
 
                     switch (messages[0]) {
                         case "ISNEW":
-                            if (Repo.Players.Find(x => x.name == messages[1]) != null) {
+                            if (Repo.Users.Find(x => x.UserName == messages[1]) != null) {
                                 sw.WriteLine("EXISTS");
                             } else {
                                 sw.WriteLine("DoesntExists");
                             }
                             break;
 
-                        case "NEW":
-                            currentPlayer.name = messages[1];
-                            currentPlayer.characterClass = messages[2];
-                            Console.WriteLine("New Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
-                            Repo.Players.Add(currentPlayer);
-                            Repo.OnlinePlayers.Add(currentPlayer);
-                            sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
-                            OnlinePlayers();
+                        case "NEWUSER":
+                            currentUser.UserName = messages[1];
+                            //TBD: LOAD ALLE CHARS TIL CLIENT CHAR SELECT SCREEN
+                            Console.WriteLine("New Player: " + currentUser.UserName);
+                            Repo.Users.Add(currentUser);
+
+                            //MOVE TO NEW CHARACTER(S)
+                            //Repo.OnlineCharacters.Add(currentUser);
+                            //sw.WriteLine(currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
+                            //OnlineCharacter();
                             break;
 
                         case "LOAD":
-                            currentPlayer = Repo.Players.Find(x => x.name == messages[1]);
-                            Console.WriteLine("Old Player: " + currentPlayer.name + ", " + currentPlayer.characterClass);
-                            Repo.OnlinePlayers.Add(currentPlayer);
-                            sw.WriteLine(currentPlayer.experiencePoints + "¤" + currentPlayer.gold + "¤" + currentPlayer.hitPoints + "¤" + currentPlayer.level);
-                            OnlinePlayers();
-                            break;
+                            currentUser = Repo.Users.Find(x => x.UserName == messages[1]);
+                            Console.WriteLine("Old Player: " + currentUser.UserName);
 
-                        case "XP":
-                            currentPlayer.experiencePoints += int.Parse(messages[1]);
-                            Console.WriteLine("Giving " + currentPlayer.name + ": " + int.Parse(messages[1]) + " xp");
+                            sw.WriteLine(currentUser.Characters.ToString()); //FORMAT ?
+
+                            //MOVE TO LOAD CHARACTER into game
+                            //Repo.OnlineCharacters.Add(currentUser);
+                            //sw.WriteLine(currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
+                            //OnlineCharacter();
                             break;
                     }
-                    
+
                 } catch (Exception e) {
                     if (e.GetType() == typeof(IOException)) {
                         client.Close();
                         Repo.Clients.Remove(this);
-                        Repo.OnlinePlayers.Remove(currentPlayer);
+                        //Repo.OnlineCharacters.Remove(currentUser);
                         Console.WriteLine(IPEP + " - Terminated");
                         Console.WriteLine(Repo.Clients.Count + " Client(s) Connected");
                         break;

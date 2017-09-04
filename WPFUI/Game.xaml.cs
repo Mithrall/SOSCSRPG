@@ -23,15 +23,13 @@ namespace WPFUI {
         public Game() {
             InitializeComponent();
 
-            
             _gameSession = new GameSession();
-
             DataContext = _gameSession;
         }
 
         //temp for testing
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
-            _gameSession.CurrentPlayer.ExperiencePoints += +10;
+            _gameSession.CurrentCharacter.ExperiencePoints += +10;
             sw.WriteLine("XP¤" + 10);
         }
 
@@ -60,30 +58,30 @@ namespace WPFUI {
         }
 
         public void StartNew(string name, string type) {
-            _gameSession.CurrentPlayer.Name = name;
-            _gameSession.CurrentPlayer.CharacterClass = type;
+            _gameSession.CurrentCharacter.Name = name;
+            _gameSession.CurrentCharacter.CharacterClass = type;
 
             sw.WriteLine("NEW¤" + name + "¤" + type);
             string[] stats = sr.ReadLine().Split('¤');
-            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
-            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+            _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentCharacter.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentCharacter.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentCharacter.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
         }
 
         public void StartExisting(string name, string type) {
-            _gameSession.CurrentPlayer.Name = name;
-            _gameSession.CurrentPlayer.CharacterClass = type;
+            _gameSession.CurrentCharacter.Name = name;
+            _gameSession.CurrentCharacter.CharacterClass = type;
 
             sw.WriteLine("LOAD¤" + name);
             string[] stats = sr.ReadLine().Split('¤');
-            _gameSession.CurrentPlayer.ExperiencePoints = int.Parse(stats[0]);
-            _gameSession.CurrentPlayer.Gold = int.Parse(stats[1]);
-            _gameSession.CurrentPlayer.HitPoints = int.Parse(stats[2]);
-            _gameSession.CurrentPlayer.Level = int.Parse(stats[3]);
+            _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(stats[0]);
+            _gameSession.CurrentCharacter.Gold = int.Parse(stats[1]);
+            _gameSession.CurrentCharacter.HitPoints = int.Parse(stats[2]);
+            _gameSession.CurrentCharacter.Level = int.Parse(stats[3]);
 
             Thread thread = new Thread(Loop);
             thread.Start();
@@ -105,9 +103,9 @@ namespace WPFUI {
 
             switch (code) {
                 case "OnlinePlayers":
-                    _gameSession.OnlinePlayers = "";
+                    _gameSession.OnlineCharacters = "";
                     for (int i = 1; i < messages.Length; i++) {
-                        _gameSession.OnlinePlayers += messages[i] + "\n";
+                        _gameSession.OnlineCharacters += messages[i] + "\n";
                     }
                     break;
             }

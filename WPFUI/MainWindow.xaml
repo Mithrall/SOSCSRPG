@@ -21,13 +21,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="50">Insert Awsome Name</Label>
+        <Label Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="50">Insert Awesome Name</Label>
         
         
         <!-- MIDDLE -->
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -42,15 +41,8 @@
 
             <Label x:Name="UserNameLabel" Content="User name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
             <TextBox x:Name="UserNameTextBox" Height="25" Grid.Row="1" Grid.Column="1" TabIndex="2"/>
-            
-            <Label x:Name="TypeLabel" Content="Class" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="TypeComboBox" Height="25" Grid.Row="2" Grid.Column="1" TabIndex="2">
-                <ComboBoxItem Content="Rogue"></ComboBoxItem>
-                <ComboBoxItem Content="Mage"></ComboBoxItem>
-                <ComboBoxItem Content="Warrior"></ComboBoxItem>                
-            </ComboBox>
 
-            <Button x:Name="LoginButton" Content="Login" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Click="Login_Click"/>
+            <Button x:Name="LoginButton" Content="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Click="Login_Click"/>
         </Grid>
     </Grid>
 </Window>
