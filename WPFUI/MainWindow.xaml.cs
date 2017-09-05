@@ -32,7 +32,7 @@ namespace WPFUI {
                     CharSelect charSelect = new CharSelect();
                     if (charSelect.Connect(ip)) {
                         charSelect.Show();
-                        if (charSelect.isNew(userName)) {
+                        if (charSelect.IsNew(userName)) {
                             charSelect.StartNew(userName);
                         } else {
                             charSelect.StartExisting(userName);

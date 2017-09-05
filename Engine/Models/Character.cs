@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 
 namespace Engine.Models {
-    public class Characters : INotifyPropertyChanged {
+    public class Character : INotifyPropertyChanged {
         private string _name;
         private string _characterClass;
         private int _hitPoints;

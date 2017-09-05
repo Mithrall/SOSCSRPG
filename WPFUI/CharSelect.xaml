@@ -24,149 +24,167 @@
         <!-- RIGHT -->
         <Grid Grid.Column="1" Background="Beige">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1.2*"/>
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <!-- HEADER -->
             <Border BorderBrush="Black" BorderThickness="1">
-                <Label Content="SERVER NAME" HorizontalAlignment="Center"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Logged in as: "/>
+                    <Label Grid.Column="1"  Content="{Binding CurrentUser.UserName}"/>
+                </Grid>
             </Border>
 
             <!-- CHAR Select -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
                 <Grid Background="Beige">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <!-- CHAR 1 -->
-                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1">
-                        <Grid x:Name="Char1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Content="Name:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="Bobby"/>
+                    <Grid x:Name="Char1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Warrior"/>
+                                <Label Grid.Row="0" Content="Name:"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentUser.Characters[0].Name}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="2"/>
-                        </Grid>
-                    </Border>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentUser.Characters[0].CharacterClass}"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentUser.Characters[0].Level}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
 
                     <!-- CHAR 2 -->
-                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                        <Grid x:Name="Char2" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid x:Name="Char2" Grid.Row="1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Content="Name:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="Bobby"/>
+                                <Label Grid.Row="0" Content="Name:"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentUser.Characters[1].Name}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Mage"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentUser.Characters[1].CharacterClass}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="1"/>
-                        </Grid>
-                    </Border>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentUser.Characters[1].Level}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
 
                     <!-- CHAR 3 -->
-                    <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1">
-                        <Grid x:Name="Char3" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid x:Name="Char3" Grid.Row="2" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Content="Name:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="Bobby"/>
+                                <Label Grid.Row="0" Content="Name:"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentUser.Characters[2].Name}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Rogue"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentUser.Characters[2].CharacterClass}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="50"/>
-                        </Grid>
-                    </Border>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentUser.Characters[2].Level}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
 
                     <!-- CHAR 4 -->
-                    <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1">
-                        <Grid x:Name="Char4" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid x:Name="Char4" Grid.Row="3" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Content="Name:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="Bobby"/>
+                                <Label Grid.Row="0" Content="Name:"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentUser.Characters[3].Name}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Mage"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentUser.Characters[3].CharacterClass}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="40"/>
-                        </Grid>
-                    </Border>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentUser.Characters[3].Level}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
 
                     <!-- CHAR 5 -->
-                    <Border Grid.Row="4" BorderBrush="Black" BorderThickness="1">
-                        <Grid x:Name="Char5" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid x:Name="Char5" Grid.Row="4" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Content="Name:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="Bobby"/>
+                                <Label Grid.Row="0" Content="Name:"/>
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentUser.Characters[4].Name}"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Rogue"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Class:"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentUser.Characters[4].CharacterClass}"/>
 
-                            <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="150"/>
-                        </Grid>
-                    </Border>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Level:"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CurrentUser.Characters[4].Level}"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
-            
+
             <!-- Buttons -->
             <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1">
                 <Grid>

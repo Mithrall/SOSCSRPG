@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,7 +39,7 @@ namespace WPFUI {
             }
         }
 
-        public bool isNew(string name) {
+        public bool IsNew(string name) {
             sw.WriteLine("ISNEW¤" + name);
 
             if (sr.ReadLine() != "EXISTS") {
@@ -74,7 +73,7 @@ namespace WPFUI {
         }
 
 
-        
+
 
         //UI STUFF
         private Grid _charSelected;
@@ -99,21 +98,28 @@ namespace WPFUI {
             }
             _charSelected = (Grid)sender;
             _charSelected.Background = Brushes.Red;
-            string s = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\" + (string)_charSelected.Children.OfType<Label>().ToList()[3].Content + ".png";
 
-            var imagebrush = new ImageBrush {ImageSource = new BitmapImage(new Uri(s))};
+            //get the child label "charclass" of the clicked on grid 
+            //bare for at have border inde i det grid der bliver trykket på så den også bliver collapsed
+            var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
+            var ls = g.Children.OfType<Label>().ToList()[3].Content;
+            var s = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\" + ls + ".png";
+            
+            var imagebrush = new ImageBrush { ImageSource = new BitmapImage(new Uri(s)) };
             Display.Background = imagebrush;
         }
 
-        private void CreateNewChar_OnClick(object sender, RoutedEventArgs e)
-        {
+        private void CreateNewChar_OnClick(object sender, RoutedEventArgs e) {
             CharCreation charCreation = new CharCreation();
             charCreation.Show();
         }
 
-        private void DeleteSelectedChar_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
+        private void DeleteSelectedChar_OnClick(object sender, RoutedEventArgs e) {
+            if (_charSelectSession.CurrentUser.Characters[0] != null)
+            {
+                _charSelected.Visibility = Visibility.Collapsed;
+                
+            }
         }
     }
 }
