@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Engine.Models;
 using Engine.ViewModels;
 
 namespace WPFUI {
@@ -16,7 +18,6 @@ namespace WPFUI {
         StreamReader sr;
         StreamWriter sw;
         CharSelectsSession _charSelectSession;
-
 
         public CharSelect() {
             InitializeComponent();
@@ -54,24 +55,39 @@ namespace WPFUI {
 
             sw.WriteLine("NEWUSER¤" + userName);
 
-            //TROR IK DER ER NØDVENDIGT ? 
-            //string[] stats = sr.ReadLine().Split('¤');
-
-            //Thread thread = new Thread(Loop);
-            //thread.Start();
         }
 
         public void StartExisting(string userName) {
             _charSelectSession.CurrentUser.UserName = userName;
 
-            sw.WriteLine("LOAD¤" + userName);
-            string[] stats = sr.ReadLine().Split('¤');
+            sw.WriteLine("LOADUSER¤" + userName);
+            string[] messages = sr.ReadLine().Split('¤');
 
 
-            //Thread thread = new Thread(Loop);
-            //thread.Start();
+            List<Character> characters = new List<Character>();
+            int i = 1;
+            while (i < int.Parse(messages[0]) * 3 + 1) {
+                characters.Add(new Character {
+                    //MESSAGE FORMAT -  character.Name + "¤" + character.CharacterClass + "¤" + character.Level + "¤"
+                    Name = messages[i],
+                    CharacterClass = messages[1 + i],
+                    Level = int.Parse(messages[2 + i])
+                });
+                i += 3;
+            }
+            _charSelectSession.CharSetup(characters);
+            InputChars();
         }
 
+        public void InputChars() {
+
+            //SHOW GRID IF CHARACTER # EXISTS
+            List<Grid> grids = new List<Grid> { Char0, Char1, Char2, Char3, Char4 };
+            int charCount = _charSelectSession.CurrentUser.Characters.Count();
+            for (int i = 0; i < charCount; i++) {
+                grids[i].Visibility = Visibility.Visible;
+            }
+        }
 
 
 
@@ -104,7 +120,7 @@ namespace WPFUI {
             var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
             var ls = g.Children.OfType<Label>().ToList()[3].Content;
             var s = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\" + ls + ".png";
-            
+
             var imagebrush = new ImageBrush { ImageSource = new BitmapImage(new Uri(s)) };
             Display.Background = imagebrush;
         }
@@ -115,11 +131,22 @@ namespace WPFUI {
         }
 
         private void DeleteSelectedChar_OnClick(object sender, RoutedEventArgs e) {
-            if (_charSelectSession.CurrentUser.Characters[0] != null)
-            {
+            if (_charSelectSession.CurrentUser.Characters[0] != null) {
                 _charSelected.Visibility = Visibility.Collapsed;
-                
+
             }
+        }
+
+        private void EnterGameOnClick(object sender, RoutedEventArgs e) {
+
+            var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
+            var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
+
+            Game game = new Game(sr, sw, client);
+            game.Show();
+            game.Start(ls);
+
+            this.Hide();
         }
     }
 }

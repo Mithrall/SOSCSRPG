@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Engine.Models {
     public class Character : INotifyPropertyChanged {
@@ -13,7 +14,7 @@ namespace Engine.Models {
             get { return _name; }
             set {
                 _name = value;
-                OnPropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -21,7 +22,7 @@ namespace Engine.Models {
             get { return _characterClass; }
             set {
                 _characterClass = value;
-                OnPropertyChanged("CharacterClass");
+                OnPropertyChanged();
             }
         }
         
@@ -29,7 +30,7 @@ namespace Engine.Models {
             get { return _hitPoints; }
             set {
                 _hitPoints = value;
-                OnPropertyChanged("HitPoints");
+                OnPropertyChanged();
             }
         }
 
@@ -39,7 +40,7 @@ namespace Engine.Models {
             }
             set {
                 _experiencePoints = value;
-                OnPropertyChanged("ExperiencePoints");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +48,7 @@ namespace Engine.Models {
             get { return _level; }
             set {
                 _level = value;
-                OnPropertyChanged("Level");
+                OnPropertyChanged();
             }
         }
 
@@ -55,12 +56,12 @@ namespace Engine.Models {
             get { return _gold; }
             set {
                 _gold = value;
-                OnPropertyChanged("Gold");
+                OnPropertyChanged();
             }
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName) {
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

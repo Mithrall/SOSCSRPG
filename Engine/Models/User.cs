@@ -4,10 +4,18 @@ using System.Runtime.CompilerServices;
 
 namespace Engine.Models {
     public class User:INotifyPropertyChanged {
-        public List<Character> Characters { get; set; }
-        public Character Character { get; set; }
+        //public Character Character { get; set; }
 
-    private string _userName;
+        private List<Character> _characters;
+        public List<Character> Characters {
+            get { return _characters; }
+            set {
+                _characters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _userName;
         public string UserName {
             get { return _userName; }
             set {

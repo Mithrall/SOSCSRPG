@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -25,9 +26,9 @@ namespace ConsoleApplication1 {
         }
 
         private void OnlineCharacter() {
-            string message = "OnlineCharacter¤";
+            string message = "OnlineCharacter";
             foreach (var character in Repo.OnlineCharacters) {
-                message += character.name + ": Level " + character.level + " " + character.characterClass + "¤";
+                message += "¤" + character.Name + ": Level " + character.Level + " " + character.CharacterClass;
             }
 
             foreach (var client in Repo.Clients) {
@@ -36,7 +37,17 @@ namespace ConsoleApplication1 {
         }
 
         internal void Handle() {
-            User currentUser = new User();
+            User currentUser = new User() {
+                //TEMP -  until char creation page is done
+                UserName = "Dorn",
+                Characters = new List<Character> { new Character() { Name = "BOB", CharacterClass = "Mage", Level = 200 } }
+            };
+            currentUser.Characters.Add(new Character() { Name = "TankBob", CharacterClass = "Warrior", Level = 30 });
+            currentUser.Characters.Add(new Character() { Name = "FireBob", CharacterClass = "Mage", Level = 100 });
+            currentUser.Characters.Add(new Character() { Name = "StealthBob", CharacterClass = "Rogue", Level = 50 });
+            currentUser.Characters.Add(new Character() { Name = "NinjaBob", CharacterClass = "Rogue", Level = 80 });
+            Repo.Users.Add(currentUser);
+            
             while (true) {
                 try {
                     string message = sr.ReadLine();
@@ -64,26 +75,35 @@ namespace ConsoleApplication1 {
 
                         case "NEWUSER":
                             currentUser.UserName = messages[1];
-                            //TBD: LOAD ALLE CHARS TIL CLIENT CHAR SELECT SCREEN
                             Console.WriteLine("New Player: " + currentUser.UserName);
                             Repo.Users.Add(currentUser);
+                            break;
 
-                            //MOVE TO NEW CHARACTER(S)
+                        case "LOADUSER":
+                            //TBD: LOAD ALLE CHARS TIL CLIENT CHAR SELECT SCREEN
+                            currentUser = Repo.Users.Find(x => x.UserName == messages[1]);
+                            int amount = currentUser.Characters.Count;
+                            string reply = amount.ToString();
+
+                            //NAME CLASS LEVEL PER CHAR
+                            foreach (var character in currentUser.Characters) {
+                                reply += "¤"+ character.Name + "¤" + character.CharacterClass + "¤" + character.Level;
+                            }
+                            sw.WriteLine(reply);
+                            break;
+
+                        case "NEWCHAR":
+                            //TBD
                             //Repo.OnlineCharacters.Add(currentUser);
-                            //sw.WriteLine(currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
+                            //sw.WriteLine(currentCharacter.characterClass + "¤" + currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
                             //OnlineCharacter();
                             break;
 
                         case "LOAD":
-                            currentUser = Repo.Users.Find(x => x.UserName == messages[1]);
-                            Console.WriteLine("Old Player: " + currentUser.UserName);
-
-                            sw.WriteLine(currentUser.Characters.ToString()); //FORMAT ?
-
-                            //MOVE TO LOAD CHARACTER into game
-                            //Repo.OnlineCharacters.Add(currentUser);
-                            //sw.WriteLine(currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
-                            //OnlineCharacter();
+                            var currentCharacter = currentUser.Characters.Find(x => x.Name == messages[1]);
+                            Repo.OnlineCharacters.Add(currentCharacter);
+                            sw.WriteLine(currentCharacter.CharacterClass + "¤" + currentCharacter.ExperiencePoints + "¤" + currentCharacter.Gold + "¤" + currentCharacter.HitPoints + "¤" + currentCharacter.Level);
+                            OnlineCharacter();
                             break;
                     }
 

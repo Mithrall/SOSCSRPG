@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Engine.Models;
 
@@ -15,15 +16,16 @@ namespace Engine.ViewModels {
         }
 
         public CharSelectsSession() {
-            CurrentUser = new User {
-                //TEMP -  until char creation page is done
-                Characters = new List<Character> {new Character() {Name = "BOB", CharacterClass = "Mage", Level = 200}}
-            };
+            CurrentUser = new User();
+        }
 
-            CurrentUser.Characters.Add(new Character() { Name = "TankBob", CharacterClass = "Warrior", Level = 30 });
-            CurrentUser.Characters.Add(new Character() { Name = "FireBob", CharacterClass = "Mage", Level = 100 });
-            CurrentUser.Characters.Add(new Character() { Name = "StealthBob", CharacterClass = "Rogue", Level = 50 });
-            CurrentUser.Characters.Add(new Character() { Name = "NinjaBob", CharacterClass = "Rogue", Level = 80 });
+        public void CharSetup(List<Character> characters) {
+            CurrentUser.Characters = Enumerable.Range(0, characters.Count).Select(x =>
+                new Character {
+                    Name = characters[x].Name,
+                    CharacterClass = characters[x].CharacterClass,
+                    Level = characters[x].Level
+                }).ToList();
         }
     }
 }

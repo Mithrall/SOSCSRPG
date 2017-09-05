@@ -41,17 +41,17 @@
 
             <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="STATS" HorizontalAlignment="Center"/>
             <Label Grid.Row="1" Grid.Column="0" Content="Name:"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=CurrentPlayer.Name}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=CurrentCharacter.Name}"/>
             <Label Grid.Row="2" Grid.Column="0" Content="Class:"/>
-            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=CurrentPlayer.CharacterClass}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=CurrentCharacter.CharacterClass}"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Hit points:"/>
-            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=CurrentPlayer.HitPoints}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=CurrentCharacter.HitPoints}"/>
             <Label Grid.Row="4" Grid.Column="0" Content="Gold:"/>
-            <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=CurrentPlayer.Gold}"/>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=CurrentCharacter.Gold}"/>
             <Label Grid.Row="5" Grid.Column="0" Content="XP:"/>
-            <Label Grid.Row="5" Grid.Column="1" Content="{Binding Path=CurrentPlayer.ExperiencePoints}"/>
+            <Label Grid.Row="5" Grid.Column="1" Content="{Binding Path=CurrentCharacter.ExperiencePoints}"/>
             <Label Grid.Row="6" Grid.Column="0" Content="Level:"/>
-            <Label Grid.Row="6" Grid.Column="1" Content="{Binding Path=CurrentPlayer.Level}"/>
+            <Label Grid.Row="6" Grid.Column="1" Content="{Binding Path=CurrentCharacter.Level}"/>
         </Grid>
 
         <!--Game Data-->
@@ -70,7 +70,7 @@
         <Label Grid.Column="0" Grid.Row="0" Content="Game Data" Background="Beige"/>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=BobWasHere}" Background="BlanchedAlmond"/>
             <Label Grid.Column="1"  Grid.Row="0" Content=": : Online Players : :" Background="DeepPink"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=OnlinePlayers}" Background="HotPink"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=OnlineCharacters}" Background="HotPink"/>
         </Grid>
         <!--Inventory/Quests-->
         <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>

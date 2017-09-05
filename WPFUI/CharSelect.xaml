@@ -13,12 +13,12 @@
         </Grid.ColumnDefinitions>
 
         <!-- LEFT -->
-
         <!-- STICKMAN -->
         <Grid x:Name="Display">
             <Grid.Background>
                 <ImageBrush Stretch="Uniform"/>
             </Grid.Background>
+            <Button Content="ENTER" Height="20" Width="102" Click="EnterGameOnClick" Margin="245,419,247,10"/>
         </Grid>
 
         <!-- RIGHT -->
@@ -52,9 +52,8 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- CHAR 1 -->
-
-                    <Grid x:Name="Char1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <!-- CHAR 0 -->
+                    <Grid x:Name="Char0" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Visibility="Collapsed">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -79,8 +78,8 @@
                         </Border>
                     </Grid>
 
-                    <!-- CHAR 2 -->
-                    <Grid x:Name="Char2" Grid.Row="1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <!-- CHAR 1 -->
+                    <Grid x:Name="Char1" Grid.Row="1" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Visibility="Collapsed">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -105,8 +104,8 @@
                         </Border>
                     </Grid>
 
-                    <!-- CHAR 3 -->
-                    <Grid x:Name="Char3" Grid.Row="2" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <!-- CHAR 2 -->
+                    <Grid x:Name="Char2" Grid.Row="2" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Visibility="Collapsed">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -131,8 +130,8 @@
                         </Border>
                     </Grid>
 
-                    <!-- CHAR 4 -->
-                    <Grid x:Name="Char4" Grid.Row="3" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <!-- CHAR 3 -->
+                    <Grid x:Name="Char3" Grid.Row="3" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Visibility="Collapsed">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -157,8 +156,8 @@
                         </Border>
                     </Grid>
 
-                    <!-- CHAR 5 -->
-                    <Grid x:Name="Char5" Grid.Row="4" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                    <!-- CHAR 4 -->
+                    <Grid x:Name="Char4" Grid.Row="4" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseLeftButtonDown" Visibility="Collapsed">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>

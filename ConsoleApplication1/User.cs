@@ -3,6 +3,6 @@
 namespace ConsoleApplication1 {
     public class User {
         public string UserName;
-        public List<Character> Characters = new List<Character>();
+        public List<Character> Characters { get; set; }
     }
 }

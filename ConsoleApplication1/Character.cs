@@ -1,22 +1,22 @@
 ﻿namespace ConsoleApplication1 {
     public class Character {
 
-        public string name;
-        public string characterClass;
+        public string Name;
+        public string CharacterClass;
 
 
-        public int hitPoints;
-        public int experiencePoints;
-        public int level;
-        public int gold;
+        public int HitPoints;
+        public int ExperiencePoints;
+        public int Level;
+        public int Gold;
 
         public Character() {
 
             //start stats
-            hitPoints = 50;
-            experiencePoints = 0;
-            level = 1;
-            gold = 0;
+            HitPoints = 50;
+            ExperiencePoints = 0;
+            Level = 1;
+            Gold = 0;
         }
     }
 }
