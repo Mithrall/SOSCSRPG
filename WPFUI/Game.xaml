@@ -66,11 +66,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            
-        <Label Grid.Column="0" Grid.Row="0" Content="Game Data" Background="Beige"/>
+
+            <Label Grid.Column="0" Grid.Row="0" Content="Game Data" Background="Beige"/>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=BobWasHere}" Background="BlanchedAlmond"/>
+            
             <Label Grid.Column="1"  Grid.Row="0" Content=": : Online Players : :" Background="DeepPink"/>
             <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=OnlineCharacters}" Background="HotPink"/>
+            
         </Grid>
         <!--Inventory/Quests-->
         <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>

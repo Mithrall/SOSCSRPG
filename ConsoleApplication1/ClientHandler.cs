@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApplication1 {
     public class ClientHandler {
@@ -47,7 +48,7 @@ namespace ConsoleApplication1 {
             currentUser.Characters.Add(new Character() { Name = "StealthBob", CharacterClass = "Rogue", Level = 50 });
             currentUser.Characters.Add(new Character() { Name = "NinjaBob", CharacterClass = "Rogue", Level = 80 });
             Repo.Users.Add(currentUser);
-            
+
             while (true) {
                 try {
                     string message = sr.ReadLine();
@@ -80,14 +81,12 @@ namespace ConsoleApplication1 {
                             break;
 
                         case "LOADUSER":
-                            //TBD: LOAD ALLE CHARS TIL CLIENT CHAR SELECT SCREEN
                             currentUser = Repo.Users.Find(x => x.UserName == messages[1]);
                             int amount = currentUser.Characters.Count;
                             string reply = amount.ToString();
-
                             //NAME CLASS LEVEL PER CHAR
                             foreach (var character in currentUser.Characters) {
-                                reply += "¤"+ character.Name + "¤" + character.CharacterClass + "¤" + character.Level;
+                                reply += "¤" + character.Name + "¤" + character.CharacterClass + "¤" + character.Level;
                             }
                             sw.WriteLine(reply);
                             break;
@@ -105,6 +104,12 @@ namespace ConsoleApplication1 {
                             sw.WriteLine(currentCharacter.CharacterClass + "¤" + currentCharacter.ExperiencePoints + "¤" + currentCharacter.Gold + "¤" + currentCharacter.HitPoints + "¤" + currentCharacter.Level);
                             OnlineCharacter();
                             break;
+
+                        case "DELETECHAR":
+                            var tempCharacter = currentUser.Characters.Find(x => x.Name == messages[1]);
+                            currentUser.Characters.Remove(tempCharacter);
+                            break;
+
                     }
 
                 } catch (Exception e) {

@@ -54,7 +54,6 @@ namespace WPFUI {
             _charSelectSession.CurrentUser.UserName = userName;
 
             sw.WriteLine("NEWUSER¤" + userName);
-
         }
 
         public void StartExisting(string userName) {
@@ -88,8 +87,7 @@ namespace WPFUI {
                 grids[i].Visibility = Visibility.Visible;
             }
         }
-
-
+        
 
         //UI STUFF
         private Grid _charSelected;
@@ -132,13 +130,20 @@ namespace WPFUI {
 
         private void DeleteSelectedChar_OnClick(object sender, RoutedEventArgs e) {
             if (_charSelectSession.CurrentUser.Characters[0] != null) {
-                _charSelected.Visibility = Visibility.Collapsed;
 
+                _charSelected.Visibility = Visibility.Collapsed;
+                //CHAR NAME
+                var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
+                var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
+
+                var tempCharacter = _charSelectSession.CurrentUser.Characters.Find(x => x.Name == ls);
+                _charSelectSession.CurrentUser.Characters.Remove(tempCharacter);
+                sw.WriteLine("DELETECHAR¤" + ls);
             }
         }
 
         private void EnterGameOnClick(object sender, RoutedEventArgs e) {
-
+            //CHAR NAME
             var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
             var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
 
