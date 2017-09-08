@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApplication1 {
     public class ClientHandler {
@@ -38,6 +37,7 @@ namespace ConsoleApplication1 {
         }
 
         internal void Handle() {
+            Character currentCharacter = new Character();
             User currentUser = new User() {
                 //TEMP -  until char creation page is done
                 UserName = "Dorn",
@@ -48,6 +48,7 @@ namespace ConsoleApplication1 {
             currentUser.Characters.Add(new Character() { Name = "StealthBob", CharacterClass = "Rogue", Level = 50 });
             currentUser.Characters.Add(new Character() { Name = "NinjaBob", CharacterClass = "Rogue", Level = 80 });
             Repo.Users.Add(currentUser);
+            
 
             while (true) {
                 try {
@@ -56,7 +57,8 @@ namespace ConsoleApplication1 {
                     //DISCONNECT CLIENT
                     if (!client.Connected || message == "EXIT") {
                         Repo.Clients.Remove(this);
-                        //Repo.OnlineCharacters.Remove(currentUser);
+                        Repo.OnlineCharacters.Remove(currentCharacter);
+                        OnlineCharacter();
                         Console.WriteLine(IPEP + " - Disconnected");
                         Console.WriteLine(Repo.Clients.Count + " Client(s) Connected");
                         break;
@@ -99,7 +101,7 @@ namespace ConsoleApplication1 {
                             break;
 
                         case "LOAD":
-                            var currentCharacter = currentUser.Characters.Find(x => x.Name == messages[1]);
+                            currentCharacter = currentUser.Characters.Find(x => x.Name == messages[1]);
                             Repo.OnlineCharacters.Add(currentCharacter);
                             sw.WriteLine(currentCharacter.CharacterClass + "¤" + currentCharacter.ExperiencePoints + "¤" + currentCharacter.Gold + "¤" + currentCharacter.HitPoints + "¤" + currentCharacter.Level);
                             OnlineCharacter();
@@ -116,7 +118,8 @@ namespace ConsoleApplication1 {
                     if (e.GetType() == typeof(IOException)) {
                         client.Close();
                         Repo.Clients.Remove(this);
-                        //Repo.OnlineCharacters.Remove(currentUser);
+                        Repo.OnlineCharacters.Remove(currentCharacter);
+                        OnlineCharacter();
                         Console.WriteLine(IPEP + " - Terminated");
                         Console.WriteLine(Repo.Clients.Count + " Client(s) Connected");
                         break;
@@ -124,6 +127,5 @@ namespace ConsoleApplication1 {
                 }
             }
         }
-
     }
 }
