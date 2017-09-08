@@ -38,17 +38,9 @@ namespace ConsoleApplication1 {
 
         internal void Handle() {
             Character currentCharacter = new Character();
-            User currentUser = new User() {
-                //TEMP -  until char creation page is done
-                UserName = "Dorn",
-                Characters = new List<Character> { new Character() { Name = "BOB", CharacterClass = "Mage", Level = 200 } }
-            };
-            currentUser.Characters.Add(new Character() { Name = "TankBob", CharacterClass = "Warrior", Level = 30 });
-            currentUser.Characters.Add(new Character() { Name = "FireBob", CharacterClass = "Mage", Level = 100 });
-            currentUser.Characters.Add(new Character() { Name = "StealthBob", CharacterClass = "Rogue", Level = 50 });
-            currentUser.Characters.Add(new Character() { Name = "NinjaBob", CharacterClass = "Rogue", Level = 80 });
-            Repo.Users.Add(currentUser);
-            
+            User currentUser = new User();
+            currentUser.Characters = new List<Character>();
+
 
             while (true) {
                 try {
@@ -94,10 +86,10 @@ namespace ConsoleApplication1 {
                             break;
 
                         case "NEWCHAR":
-                            //TBD
-                            //Repo.OnlineCharacters.Add(currentUser);
-                            //sw.WriteLine(currentCharacter.characterClass + "¤" + currentUser.experiencePoints + "¤" + currentUser.gold + "¤" + currentUser.hitPoints + "¤" + currentUser.level);
-                            //OnlineCharacter();
+                            currentUser.Characters.Add(new Character {
+                                Name = messages[1],
+                                CharacterClass = messages[2]
+                            });
                             break;
 
                         case "LOAD":

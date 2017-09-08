@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
         Title="CharCreation" Height="480" Width="854">
-    <Grid>
+    <Grid x:Name="Display">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -21,19 +21,22 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <StackPanel x:Name="CharClass" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
+            <RadioButton GroupName="CharClass" Content="Warrior" Checked="CharClass_OnChecked" IsChecked="True"/>
+            <RadioButton GroupName="CharClass" Content="Mage" Checked="CharClass_OnChecked"/>
+            <RadioButton GroupName="CharClass" Content="Rogue" Checked="CharClass_OnChecked"/>
+        </StackPanel>
+
         <Label Grid.Column="1" Grid.Row="1" Content="Name:"/>
         <TextBox x:Name="CharName"  Grid.Column="2" Grid.Row="1" Text=""/>
 
-        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Warrior"/>
-        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Mage"/>
-        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Rogue"/>
         <!--<ComboBox x:Name="CharClass" Grid.Column="2" Grid.Row="2" Height="20" Width="140">
             <ComboBoxItem Content="Warrior" IsSelected="True"/>
             <ComboBoxItem Content="Mage"/>
             <ComboBoxItem Content="Rogue"/>
         </ComboBox>-->
-        
-        <Button Grid.Column="2" Grid.Row="3" Content="Create" Click="CreateChar_OnClick"/>
+
+        <Button x:Name="CreateButton" Grid.Column="2" Grid.Row="3" Width="140" Content="Create" Click="CreateChar_OnClick"/>
     </Grid>
 </Window>

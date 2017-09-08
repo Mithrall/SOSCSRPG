@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 
 namespace Engine.Models {
     public class User:INotifyPropertyChanged {
-        //public Character Character { get; set; }
 
         private List<Character> _characters;
         public List<Character> Characters {

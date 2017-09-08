@@ -77,13 +77,14 @@ namespace WPFUI {
             _charSelectSession.CharSetup(characters);
             InputChars();
         }
-
+        public void CreateNewChar(string charClassSelected, string charName) {
+            sw.WriteLine("NEWCHAR¤" + charName + "¤" + charClassSelected);
+            StartExisting(_charSelectSession.CurrentUser.UserName);
+        }
 
 
         //UI STUFF
         private Grid _charSelected;
-
-
 
         public void InputChars() {
 
@@ -128,6 +129,8 @@ namespace WPFUI {
 
         private void CreateNewChar_OnClick(object sender, RoutedEventArgs e) {
             CharCreation charCreation = new CharCreation();
+            charCreation.Setup(this);
+            this.Hide();
             charCreation.Show();
         }
 
