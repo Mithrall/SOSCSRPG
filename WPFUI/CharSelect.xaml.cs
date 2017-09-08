@@ -78,6 +78,13 @@ namespace WPFUI {
             InputChars();
         }
 
+
+
+        //UI STUFF
+        private Grid _charSelected;
+
+
+
         public void InputChars() {
 
             //SHOW GRID IF CHARACTER # EXISTS
@@ -87,10 +94,6 @@ namespace WPFUI {
                 grids[i].Visibility = Visibility.Visible;
             }
         }
-        
-
-        //UI STUFF
-        private Grid _charSelected;
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e) {
             var temp = (Grid)sender;

@@ -7,6 +7,33 @@
         mc:Ignorable="d"
         Title="CharCreation" Height="480" Width="854">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
+        <Label Grid.Column="1" Grid.Row="1" Content="Name:"/>
+        <TextBox x:Name="CharName"  Grid.Column="2" Grid.Row="1" Text=""/>
+
+        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Warrior"/>
+        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Mage"/>
+        <RadioButton  Grid.Column="2" Grid.Row="2" GroupName="CharClass" Content="Rogue"/>
+        <!--<ComboBox x:Name="CharClass" Grid.Column="2" Grid.Row="2" Height="20" Width="140">
+            <ComboBoxItem Content="Warrior" IsSelected="True"/>
+            <ComboBoxItem Content="Mage"/>
+            <ComboBoxItem Content="Rogue"/>
+        </ComboBox>-->
+        
+        <Button Grid.Column="2" Grid.Row="3" Content="Create" Click="CreateChar_OnClick"/>
     </Grid>
 </Window>
