@@ -7,6 +7,7 @@ namespace Engine.Models {
         private string _characterClass;
         private int _hitPoints;
         private int _experiencePoints;
+        private int _xpNeeded;
         private int _level;
         private int _gold;
 
@@ -34,6 +35,15 @@ namespace Engine.Models {
             }
         }
 
+        public int XpNeeded {
+            get {
+                return _xpNeeded;
+            }
+            set {
+                _xpNeeded = value;
+                OnPropertyChanged();
+            }
+        }
         public int ExperiencePoints {
             get {
                 return _experiencePoints;

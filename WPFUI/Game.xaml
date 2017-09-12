@@ -49,7 +49,11 @@
             <Label Grid.Row="4" Grid.Column="0" Content="Gold:"/>
             <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=CurrentCharacter.Gold}"/>
             <Label Grid.Row="5" Grid.Column="0" Content="XP:"/>
-            <Label Grid.Row="5" Grid.Column="1" Content="{Binding Path=CurrentCharacter.ExperiencePoints}"/>
+            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                <Label Content="{Binding Path=CurrentCharacter.ExperiencePoints}"/>
+                <Label Content="/"/>
+                <Label Content="{Binding Path=CurrentCharacter.XpNeeded}"/>
+            </StackPanel>
             <Label Grid.Row="6" Grid.Column="0" Content="Level:"/>
             <Label Grid.Row="6" Grid.Column="1" Content="{Binding Path=CurrentCharacter.Level}"/>
         </Grid>
@@ -68,11 +72,11 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" Content="Game Data" Background="Beige"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=BobWasHere}" Background="BlanchedAlmond"/>
-            
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=CombatText}" Background="BlanchedAlmond"/>
+
             <Label Grid.Column="1"  Grid.Row="0" Content=": : Online Players : :" Background="DeepPink"/>
             <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=OnlineCharacters}" Background="HotPink"/>
-            
+
         </Grid>
         <!--Inventory/Quests-->
         <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
@@ -87,7 +91,6 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -96,11 +99,11 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Combat/Movement Control" Grid.Column="1" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="10,0,10,0"/>
             <Button Grid.Row="1" Grid.Column="1" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="0,0,10,0"/>
             <Button Grid.Row="1" Grid.Column="2" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="0,0,10,0"/>
             <Button Grid.Row="1" Grid.Column="3" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="0,0,10,0"/>
             <Button Grid.Row="1" Grid.Column="4" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="0,0,10,0"/>
-            <Button Grid.Row="1" Grid.Column="5" Content="Add XP" Click="ButtonBase_OnClick" Width="100" Margin="0,0,10,0"/>
         </Grid>
 
     </Grid>

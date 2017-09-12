@@ -1,22 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
+using System.Xml.XPath;
 using Engine.ViewModels;
 
 namespace WPFUI {
-    public partial class Game:Window {
+    public partial class Game {
 
-        TcpClient client;
         StreamReader sr;
         StreamWriter sw;
         GameSession _gameSession;
 
         private bool _running = true;
-        
 
-        public Game(StreamReader sr, StreamWriter sw, TcpClient client) {
+
+        public Game(StreamReader sr, StreamWriter sw) {
             InitializeComponent();
 
             _gameSession = new GameSession();
@@ -24,12 +23,10 @@ namespace WPFUI {
 
             this.sr = sr;
             this.sw = sw;
-            this.client = client;
         }
 
         //temp for testing
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
-            _gameSession.CurrentCharacter.ExperiencePoints += +10;
             sw.WriteLine("XP¤" + 10);
         }
 
@@ -40,10 +37,11 @@ namespace WPFUI {
             string[] stats = sr.ReadLine().Split('¤');
             _gameSession.CurrentCharacter.CharacterClass = stats[0];
             _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(stats[1]);
-            _gameSession.CurrentCharacter.Gold = int.Parse(stats[2]);
-            _gameSession.CurrentCharacter.HitPoints = int.Parse(stats[3]);
-            _gameSession.CurrentCharacter.Level = int.Parse(stats[4]);
-            
+            _gameSession.CurrentCharacter.XpNeeded = int.Parse(stats[2]);
+            _gameSession.CurrentCharacter.Gold = int.Parse(stats[3]);
+            _gameSession.CurrentCharacter.HitPoints = int.Parse(stats[4]);
+            _gameSession.CurrentCharacter.Level = int.Parse(stats[5]);
+
             Thread thread = new Thread(Loop);
             thread.Start();
         }
@@ -68,6 +66,16 @@ namespace WPFUI {
                     for (int i = 1; i < messages.Length; i++) {
                         _gameSession.OnlineCharacters += messages[i] + "\n";
                     }
+                    break;
+                case "LevelUp":
+                    // LEVEL xp xpneeded hp
+                    _gameSession.CurrentCharacter.Level = int.Parse(messages[1]);
+                    _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(messages[2]);
+                    _gameSession.CurrentCharacter.XpNeeded = int.Parse(messages[3]);
+                    _gameSession.CurrentCharacter.HitPoints = int.Parse(messages[4]);
+                    break;
+                case "Xp":
+                    _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(messages[1]);
                     break;
             }
         }

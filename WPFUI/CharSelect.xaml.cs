@@ -153,7 +153,7 @@ namespace WPFUI {
             var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
             var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
 
-            Game game = new Game(sr, sw, client);
+            Game game = new Game(sr, sw);
             game.Show();
             game.Start(ls);
 
