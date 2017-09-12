@@ -12,5 +12,8 @@ namespace ConsoleApplication1 {
             Sw = sw;
             Characters = new List<Character>();
         }
+
+        public User() {
+        }
     }
 }

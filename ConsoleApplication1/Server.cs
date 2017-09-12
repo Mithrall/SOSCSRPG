@@ -21,10 +21,70 @@ namespace ConsoleApplication1 {
         private void Run() {
             Console.WriteLine("Online");
 
-
             // Some biolerplate to react to close window event, CTRL-C, kill, etc
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
+
+
+            //TEMP
+
+            //FORMAT: ¤USERNAME username name class xp gold hp xpneeded
+            var text = File.ReadAllLines(SavePath);
+            Console.WriteLine(text.Length);
+
+            var nextKind = 0;
+            User currentUser = new User();
+            Character currentCharacter = new Character();
+
+            foreach (var item in text) {
+
+                switch (nextKind) {
+                    case 1:
+                        currentUser = new User {
+                            UserName = item,
+                            Characters = new List<Character>()
+                        };
+                        Repo.Users.Add(currentUser);
+                        nextKind++;
+                        break;
+
+                    case 2:
+                        currentCharacter = new Character(currentUser) { Name = item };
+                        currentUser.Characters.Add(currentCharacter);
+                        nextKind++;
+                        break;
+
+                    case 3:
+                        currentCharacter.CharacterClass = item;
+                        nextKind++;
+                        break;
+
+                    case 4:
+                        currentCharacter.ExperiencePoints = int.Parse(item);
+                        nextKind++;
+                        break;
+
+                    case 5:
+                        currentCharacter.Gold = int.Parse(item);
+                        nextKind++;
+                        break;
+
+                    case 6:
+                        currentCharacter.HitPoints = int.Parse(item);
+                        nextKind++;
+                        break;
+
+                    case 7:
+                        currentCharacter.XpNeeded = int.Parse(item);
+                        nextKind++;
+                        break;
+                }
+                if (item == "¤USERNAME") {
+                    nextKind = 1;
+                }
+            }
+            // TEMP END
+
 
             TcpListener server = new TcpListener(IPAddress.Any, 12345);
             server.Start();
@@ -79,18 +139,19 @@ namespace ConsoleApplication1 {
         private static bool Handler(CtrlType sig) {
             Console.WriteLine("Exiting system due to external CTRL-C, or process kill, or shutdown");
 
+            //SAVE ALL USERS + CHARS TO FILE
+            //FORMAT: ¤USERNAME username name class xp gold hp xpneeded
             List<List<string[]>[]> temp = Repo.Users.Select(x => new List<string[]>[] {
-                new List<string[]> { new string[] { "USERNAME¤", x.UserName }}, x.Characters.Select(y => new string[] {
+                new List<string[]> { new string[] { "¤USERNAME", x.UserName }}, x.Characters.Select(y => new string[] {
                     y.Name, y.CharacterClass, y.ExperiencePoints.ToString(), y.Gold.ToString(), y.HitPoints.ToString(), y.XpNeeded.ToString()
-                }).ToList() 
+                }).ToList()
             }).ToList();
-
-
+            File.WriteAllText(SavePath, String.Empty);
             foreach (var user in temp) {
                 foreach (var chars in user) {
                     foreach (var strings in chars) {
                         foreach (var s in strings) {
-                            File.AppendAllText(SavePath, s + "\n");
+                            File.AppendAllText(SavePath, s + Environment.NewLine);
                         }
                     }
                 }
@@ -98,7 +159,6 @@ namespace ConsoleApplication1 {
 
             Console.WriteLine("Cleanup complete");
 
-            Thread.Sleep(1000);
             //allow main to run off
             _exitSystem = true;
 

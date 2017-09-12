@@ -23,6 +23,7 @@ namespace ConsoleApplication1 {
                 if (_experiencePoints >= XpNeeded) {
                     ExperiencePoints = _experiencePoints - XpNeeded;
                     Level++;
+                    //Chrasher  ? evt. lav timed istedet.
                     Server.OnlineCharacter();
                     // LEVEL xp xpneeded hp
                     Owner.Sw.WriteLine("LevelUp¤" + Level + "¤" + ExperiencePoints + "¤" + XpNeeded + "¤" + HitPoints);
@@ -50,6 +51,9 @@ namespace ConsoleApplication1 {
             ExperiencePoints = 0;
             _level = 1;
             Gold = 0;
+        }
+
+        public Character() {
         }
     }
 }
