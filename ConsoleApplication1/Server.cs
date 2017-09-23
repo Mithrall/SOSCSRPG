@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -28,32 +26,43 @@ namespace ConsoleApplication1 {
             //LOAD USERS
             //FORMAT: ¤USERNAME username
             //name class xp gold hp xpneeded
-            var text = File.ReadAllLines(SavePath);
-            Console.WriteLine(text.Length);
+            try {
+                var text = File.ReadAllLines(SavePath);
+                User currentUser = new User();
 
-            User currentUser = new User();
+                foreach (var lines in text) {
 
-            foreach (var lines in text) {
-
-                var line = lines.Split('¤');
-                if (line[0] == "USERNAME") {
-                    currentUser = new User {
-                        UserName = line[1],
-                        Characters = new List<Character>()
-                    };
-                    Repo.Users.Add(currentUser);
-                } else {
-                    currentUser.Characters.Add(new Character {
-                        Name = line[0],
-                        CharacterClass = line[1],
-                        ExperiencePoints = int.Parse(line[2]),
-                        Gold = int.Parse(line[3]),
-                        HitPoints = int.Parse(line[4]),
-                        XpNeeded = int.Parse(line[5]),
-                        Level = int.Parse(line[6])
-                    });
+                    var line = lines.Split('¤');
+                    if (line[0] == "USERNAME") {
+                        currentUser = new User {
+                            UserName = line[1],
+                            Characters = new List<Character>()
+                        };
+                        Repo.Users.Add(currentUser);
+                    } else {
+                        currentUser.Characters.Add(new Character {
+                            Name = line[0],
+                            CharacterClass = line[1],
+                            ExperiencePoints = int.Parse(line[2]),
+                            Gold = int.Parse(line[3]),
+                            HitPoints = int.Parse(line[4]),
+                            XpNeeded = int.Parse(line[5]),
+                            Level = int.Parse(line[6])
+                        });
+                    }
                 }
+            } catch (Exception) {
             }
+
+            //TEMP
+            Repo.Enemies.Add(new Enemy {
+                Name = "Rat",
+                Gold = 1,
+                HitPoints = 5,
+                Xp = 2
+            });
+            //ENDTEMP
+
 
             TcpListener server = new TcpListener(IPAddress.Any, 12345);
             server.Start();
@@ -64,7 +73,7 @@ namespace ConsoleApplication1 {
             }
         }
 
-        private void ClientConnection(object obj) { // Refactor into a ClientHandler Class
+        private void ClientConnection(object obj) {
             var client = (TcpClient)obj;
 
             ClientHandler handler = new ClientHandler(client);
@@ -82,14 +91,13 @@ namespace ConsoleApplication1 {
             foreach (var character in Repo.OnlineCharacters) {
                 message += "¤" + character.Name + ": Level " + character.Level + " " + character.CharacterClass;
             }
-
             foreach (var client in Repo.Clients) {
                 client.Writer().WriteLine(message);
             }
         }
 
         //ON WINDOW CLOSE
-        #region Trap application termination
+        #region Application termination
         [DllImport("Kernel32")]
         private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
 

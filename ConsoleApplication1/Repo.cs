@@ -7,6 +7,8 @@ namespace ConsoleApplication1 {
         public static List<User> Users = new List<User>();
         
         public static List<Character> OnlineCharacters = new List<Character>();
+
+        public static List<Enemy> Enemies = new List<Enemy>();
         
     }
 }
