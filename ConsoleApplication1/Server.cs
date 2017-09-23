@@ -25,66 +25,35 @@ namespace ConsoleApplication1 {
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
 
-
-            //TEMP
-
-            //FORMAT: ¤USERNAME username name class xp gold hp xpneeded
+            //LOAD USERS
+            //FORMAT: ¤USERNAME username
+            //name class xp gold hp xpneeded
             var text = File.ReadAllLines(SavePath);
             Console.WriteLine(text.Length);
 
-            var nextKind = 0;
             User currentUser = new User();
-            Character currentCharacter = new Character();
 
-            foreach (var item in text) {
+            foreach (var lines in text) {
 
-                switch (nextKind) {
-                    case 1:
-                        currentUser = new User {
-                            UserName = item,
-                            Characters = new List<Character>()
-                        };
-                        Repo.Users.Add(currentUser);
-                        nextKind++;
-                        break;
-
-                    case 2:
-                        currentCharacter = new Character(currentUser) { Name = item };
-                        currentUser.Characters.Add(currentCharacter);
-                        nextKind++;
-                        break;
-
-                    case 3:
-                        currentCharacter.CharacterClass = item;
-                        nextKind++;
-                        break;
-
-                    case 4:
-                        currentCharacter.ExperiencePoints = int.Parse(item);
-                        nextKind++;
-                        break;
-
-                    case 5:
-                        currentCharacter.Gold = int.Parse(item);
-                        nextKind++;
-                        break;
-
-                    case 6:
-                        currentCharacter.HitPoints = int.Parse(item);
-                        nextKind++;
-                        break;
-
-                    case 7:
-                        currentCharacter.XpNeeded = int.Parse(item);
-                        nextKind++;
-                        break;
-                }
-                if (item == "¤USERNAME") {
-                    nextKind = 1;
+                var line = lines.Split('¤');
+                if (line[0] == "USERNAME") {
+                    currentUser = new User {
+                        UserName = line[1],
+                        Characters = new List<Character>()
+                    };
+                    Repo.Users.Add(currentUser);
+                } else {
+                    currentUser.Characters.Add(new Character {
+                        Name = line[0],
+                        CharacterClass = line[1],
+                        ExperiencePoints = int.Parse(line[2]),
+                        Gold = int.Parse(line[3]),
+                        HitPoints = int.Parse(line[4]),
+                        XpNeeded = int.Parse(line[5]),
+                        Level = int.Parse(line[6])
+                    });
                 }
             }
-            // TEMP END
-
 
             TcpListener server = new TcpListener(IPAddress.Any, 12345);
             server.Start();
@@ -140,20 +109,16 @@ namespace ConsoleApplication1 {
             Console.WriteLine("Exiting system due to external CTRL-C, or process kill, or shutdown");
 
             //SAVE ALL USERS + CHARS TO FILE
-            //FORMAT: ¤USERNAME username name class xp gold hp xpneeded
-            List<List<string[]>[]> temp = Repo.Users.Select(x => new List<string[]>[] {
-                new List<string[]> { new string[] { "¤USERNAME", x.UserName }}, x.Characters.Select(y => new string[] {
-                    y.Name, y.CharacterClass, y.ExperiencePoints.ToString(), y.Gold.ToString(), y.HitPoints.ToString(), y.XpNeeded.ToString()
-                }).ToList()
-            }).ToList();
+            //FORMAT: ¤USERNAME username
+            //name class xp gold hp xpneeded level
             File.WriteAllText(SavePath, String.Empty);
-            foreach (var user in temp) {
-                foreach (var chars in user) {
-                    foreach (var strings in chars) {
-                        foreach (var s in strings) {
-                            File.AppendAllText(SavePath, s + Environment.NewLine);
-                        }
-                    }
+            foreach (var user in Repo.Users) {
+                var n = user.UserName;
+                File.AppendAllText(SavePath, "USERNAME¤" + n + Environment.NewLine);
+                foreach (var y in user.Characters) {
+                    var s = y.Name + "¤" + y.CharacterClass + "¤" + y.ExperiencePoints + "¤" +
+                            y.Gold + "¤" + y.HitPoints + "¤" + y.XpNeeded + "¤" + y.Level;
+                    File.AppendAllText(SavePath, s + Environment.NewLine);
                 }
             }
 
