@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Windows;
-using System.Xml.XPath;
+using Engine.Models;
 using Engine.ViewModels;
 
 namespace WPFUI {
@@ -29,6 +29,11 @@ namespace WPFUI {
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
             sw.WriteLine("XP¤" + 10);
         }
+
+        private void Attack_OnClick(object sender, RoutedEventArgs e) {
+            sw.WriteLine("ATTACK¤" + 1);
+        }
+        //ENDTEMP
 
         public void Start(string name) {
             _gameSession.CurrentCharacter.Name = name;
@@ -67,6 +72,7 @@ namespace WPFUI {
                         _gameSession.OnlineCharacters += messages[i] + "\n";
                     }
                     break;
+
                 case "LevelUp":
                     // LEVEL xp xpneeded hp
                     _gameSession.CurrentCharacter.Level = int.Parse(messages[1]);
@@ -74,8 +80,31 @@ namespace WPFUI {
                     _gameSession.CurrentCharacter.XpNeeded = int.Parse(messages[3]);
                     _gameSession.CurrentCharacter.HitPoints = int.Parse(messages[4]);
                     break;
+
                 case "Xp":
                     _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(messages[1]);
+                    break;
+
+                case "NEWENEMY":
+                    //Name HP MaxHP Xp Gold
+                    _gameSession.CurrentEnemy.Name = messages[1];
+                    _gameSession.CurrentEnemy.HitPoints = int.Parse(messages[2]);
+                    _gameSession.CurrentEnemy.MaxHitPoints = int.Parse(messages[3]);
+                    _gameSession.CurrentEnemy.Xp = int.Parse(messages[4]);
+                    _gameSession.CurrentEnemy.Gold = int.Parse(messages[5]);
+                    break;
+
+                case "ENEMY":
+                    _gameSession.CurrentEnemy.HitPoints = int.Parse(messages[1]);
+                    break;
+
+                case "ENEMYDEAD":
+                    sw.WriteLine("REWARD¤");
+                    break;
+
+                case "REWARD":
+                    _gameSession.CurrentCharacter.ExperiencePoints = int.Parse(messages[1]);
+                    _gameSession.CurrentCharacter.Gold = int.Parse(messages[2]);
                     break;
             }
         }

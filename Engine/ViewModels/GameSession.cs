@@ -5,6 +5,8 @@ using Engine.Models;
 namespace Engine.ViewModels {
     public class GameSession : INotifyPropertyChanged {
         public Character CurrentCharacter { get; set; }
+        public Enemy CurrentEnemy { get; set; }
+
 
         private string _onlineCharacters;
         public string OnlineCharacters {
@@ -23,6 +25,7 @@ namespace Engine.ViewModels {
 
         public GameSession() {
             CurrentCharacter = new Character();
+            CurrentEnemy = new Enemy();
         }
     }
 }

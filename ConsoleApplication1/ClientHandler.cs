@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace ConsoleApplication1 {
     public class ClientHandler {
@@ -31,9 +32,11 @@ namespace ConsoleApplication1 {
         internal void Handle() {
             User currentUser = new User(sw);
             Character currentCharacter = new Character(currentUser);
+            int currentEnemyNumber = 0;
 
 
             while (true) {
+                Enemy currentEnemy = Repo.Enemies[currentEnemyNumber];
                 try {
                     string message = sr.ReadLine();
 
@@ -89,15 +92,19 @@ namespace ConsoleApplication1 {
                             Repo.OnlineCharacters.Add(currentCharacter);
                             sw.WriteLine(currentCharacter.CharacterClass + "¤" + currentCharacter.ExperiencePoints + "¤" + currentCharacter.XpNeeded + "¤" + currentCharacter.Gold + "¤" + currentCharacter.HitPoints + "¤" + currentCharacter.Level);
                             Server.OnlineCharacter();
+                            
+                            sw.WriteLine("NEWENEMY¤" + currentEnemy.Name + "¤" + currentEnemy.HitPoints + "¤" + currentEnemy.MaxHitPoints + "¤" + currentEnemy.Xp + "¤" + currentEnemy.Gold);
 
-                            //TESTING TEMP
-                            List<string[]> test = Repo.Users[0].Characters.Select(x => new string[] { x.Name, x.CharacterClass, x.ExperiencePoints.ToString(), x.Gold.ToString(), x.HitPoints.ToString(), /*x.Owner.ToString(),*/ x.XpNeeded.ToString() }).ToList();
+                            //List<string[]> test = Repo.Users[0].Characters.Select(x => new[] {
+                            //    x.Name, x.CharacterClass, x.ExperiencePoints.ToString(), x.Gold.ToString(),
+                            //    x.HitPoints.ToString(), /*x.Owner.ToString(),*/ x.XpNeeded.ToString()
+                            //}).ToList();
+                            //foreach (var chars in test) {
+                            //    foreach (string _char in chars) {
+                            //        Console.WriteLine(_char);
+                            //    }
+                            //}
 
-                            foreach (var chars in test) {
-                                foreach (string _char in chars) {
-                                    Console.WriteLine(_char);
-                                }
-                            }
                             break;
 
                         case "DELETECHAR":
@@ -105,10 +112,40 @@ namespace ConsoleApplication1 {
                             currentUser.Characters.Remove(tempCharacter);
                             break;
 
-                        case "XP": //temp for testing
+                        //temp for testing
+                        case "XP":
                             currentCharacter.ExperiencePoints += int.Parse(messages[1]);
                             sw.WriteLine("Xp¤" + currentCharacter.ExperiencePoints);
                             break;
+
+                        case "ATTACK":
+                            //OUT OF HP = DEAD
+                            if (currentEnemy.HitPoints - int.Parse(messages[1]) <= 0) {
+                                currentEnemy.HitPoints = currentEnemy.MaxHitPoints;
+
+                                //new enemy (RANDOM TBD)
+                                currentEnemyNumber = 0;
+
+
+                                foreach (var tempClient in Repo.Clients) {
+                                    tempClient.Writer().WriteLine("ENEMYDEAD¤");
+                                }
+
+                            } else { //NOT DEAD
+                                currentEnemy.HitPoints -= int.Parse(messages[1]);
+                                foreach (var tempClient in Repo.Clients) {
+                                    tempClient.Writer().WriteLine("ENEMY¤" + currentEnemy.HitPoints);
+                                }
+                            }
+                            break;
+
+                        case "REWARD":
+                            currentCharacter.ExperiencePoints += currentEnemy.Xp;
+                            currentCharacter.Gold += currentEnemy.Gold;
+                            sw.WriteLine("REWARD¤" + currentCharacter.ExperiencePoints + "¤" + currentCharacter.Gold);
+                            break;
+
+                            //ENDTEMP
                     }
 
                 } catch (Exception e) {

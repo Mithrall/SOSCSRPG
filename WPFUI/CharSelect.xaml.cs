@@ -148,16 +148,20 @@ namespace WPFUI {
             }
         }
 
-        private void EnterGameOnClick(object sender, RoutedEventArgs e) {
-            //CHAR NAME
-            var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
-            var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
+        private void EnterGame_OnClick(object sender, RoutedEventArgs e) {
+            try {
+                //CHAR NAME
+                var g = (Grid)_charSelected.Children.OfType<Border>().ToList()[0].Child;
+                var ls = (string)g.Children.OfType<Label>().ToList()[1].Content;
 
-            Game game = new Game(sr, sw);
-            game.Show();
-            game.Start(ls);
+                Game game = new Game(sr, sw);
+                game.Show();
+                game.Start(ls);
 
-            this.Hide();
+                Hide();
+            } catch {
+                MessageBox.Show("You forgot to choose a character");
+            }
         }
     }
 }

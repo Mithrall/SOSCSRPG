@@ -18,7 +18,7 @@
             <Grid.Background>
                 <ImageBrush Stretch="Uniform"/>
             </Grid.Background>
-            <Button Content="ENTER" Height="20" Width="102" Click="EnterGameOnClick" Margin="245,419,247,10"/>
+            <Button Content="ENTER" Height="20" Width="102" Click="EnterGame_OnClick" Margin="245,419,247,10"/>
         </Grid>
 
         <!-- RIGHT -->

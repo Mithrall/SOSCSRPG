@@ -9,11 +9,11 @@ using System.Threading;
 namespace ConsoleApplication1 {
     class Server {
         public static string SavePath = "C:\\Users\\Kenneth\\Desktop\\Test.txt";
-        static bool _exitSystem = false;
+        private static bool _exitSystem;
 
-        static void Main(string[] args) {
-            Server Run = new Server();
-            Run.Run();
+        static void Main(string[] arg) {
+            Server run = new Server();
+            run.Run();
         }
 
         private void Run() {
@@ -51,13 +51,17 @@ namespace ConsoleApplication1 {
                         });
                     }
                 }
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
+                // ignored
             }
 
             //TEMP
             Repo.Enemies.Add(new Enemy {
                 Name = "Rat",
                 Gold = 1,
+                MaxHitPoints = 5,
                 HitPoints = 5,
                 Xp = 2
             });
