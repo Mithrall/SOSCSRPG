@@ -38,7 +38,7 @@ namespace ConsoleApplication1 {
             }
             set {
                 _level = value;
-                HitPoints += Level * 30;
+                HitPoints += _level * 30;
                 XpNeeded = (int)(XpNeeded + _level * 0.1);
             }
         }

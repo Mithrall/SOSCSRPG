@@ -158,17 +158,18 @@
 
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="10,5,5,0">
                 <Button Content="Attack" Click="Attack_OnClick"/>
+                <!--<Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
-                <Button Content="Attack" Click="Attack_OnClick"/>
-                <Button Content="Attack" Click="Attack_OnClick"/>
+                <Button Content="Attack" Click="Attack_OnClick"/>-->
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,5,10,0">
+                <!--<Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
@@ -176,8 +177,7 @@
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
                 <Button Content="Attack" Click="Attack_OnClick"/>
-                <Button Content="Attack" Click="Attack_OnClick"/>
-                <Button Content="Attack" Click="Attack_OnClick"/>
+                <Button Content="Attack" Click="Attack_OnClick"/>-->
             </StackPanel>
         </Grid>
 
